@@ -37,12 +37,16 @@
 
     <script>
         const apiKey = "4ef3eb1d1d9d3c567ef32908be5215cb";
-        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=belgrade";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
-        async function checkWeather() {
-            const response = await fetch(apiUrl + `&appid=${apiKey}`); 
+        const searchBox = document.querySelector('.search input');
+        const searchBtn = document.querySelector('.search button');
+        const weatherIcon = document.querySelector('.weather-icon');
+
+        async function checkWeather(city) {
+            const response = await fetch(apiUrl + city + `&appid=${apiKey}`); 
             var data = await response.json();
-
+            
             console.log(data);
 
             document.querySelector(".city").innerHTML = data.name;
@@ -51,7 +55,10 @@
             document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
         }
 
-        checkWeather();
+        searchBtn.addEventListener("click", () => {
+            checkWeather(searchBox.value);
+        });
+        
     </script>
 
 </body>
